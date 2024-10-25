@@ -1,0 +1,90 @@
+.form-body,
+.form-html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #ff6347;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form {
+  display: none;
+}
+
+#signin-tab:checked ~ .signin-form,
+#signup-tab:checked ~ .signup-form {
+  display: block;
+}
+
+form {
+  margin: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  width: 100%;
+  padding: 1em;
+  margin-bottom: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 1em;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 4px;
+  font-size: 1em;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #ff4500;
+}
+
+.form-label {
+  cursor: pointer;
+  padding: 1em 2em;
+  background-color: #ccc;
+  margin: 0.5em;
+  border-radius: 4px 4px 0 0;
+  transition: background-color 0.3s ease;
+  color: #001aff;
+}
+
+.form-label:hover {
+  color: #ff4500;
+  cursor: pointer;
+}
+
+.form-text {
+  font-size: 0.9em;
+  margin-top: 1em;
+}
+
+.form-text:hover {
+  text-decoration: underline;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(9, 33, 64, 0.808);
+  padding: 2em;
+}
