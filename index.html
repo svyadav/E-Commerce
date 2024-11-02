@@ -107,7 +107,7 @@
     <section class="product-features">
         <div class="container">
             <h2>Product Features Comparison</h2>
-            <table class="comparison-table">
+            <table class="comparison-table" id="comparison-table">
                 <thead>
                     <tr>
                         <th rowspan="2">Product</th>
@@ -123,7 +123,7 @@
 
                 </thead>
                 <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td>Product 1</td>
                         <td>$49.99</td>
                         <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio, cumque</td>
@@ -143,7 +143,7 @@
                         <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim, blanditiis.</td>
                         <td>Small</td>
                         <td>0.8 Kg</td>
-                    </tr>
+                    </tr> -->
 
                 </tbody>
             </table>
@@ -186,6 +186,64 @@
 
     <script>
 
+
+        //for table
+
+        function fetchData(url, callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    callback(null, JSON.parse(xhr.responseText));
+                }
+                else {
+                    callback(xhr.statusText, null)
+                }
+            };
+            xhr.onerror = function () {
+                callback(xhr.statusText, null);
+            };
+            xhr.send();
+        }
+
+        function populateTale(data) {
+            const tableBody = document.querySelector('#comparison-table tbody');
+            tableBody.innerHTML = '';
+
+            data.slice(0, 5).forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${product.title}</td>
+                      <td>$${product.price.toFixed(2)}</td>
+                    <td>${product.description}</td>
+                    <td>${product.size || 'N/A'}</td>
+                    <td>${product.weight || 'N/A'}</td>
+                `;
+                tableBody.appendChild(row);
+            })
+        }
+
+        function fetchAndPopulateTable(url) {
+            fetchData.call(this, url, function (error, data) {
+                if (error) {
+                    console.error('Error fecthing data:', error);
+                    return;
+                }
+                populateTale.call(this, data);
+            })
+        }
+
+        const fecthAndPopulate = fetchAndPopulateTable.bind(null, 'https://fakestoreapi.com/products');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            fecthAndPopulate.apply(null, []);
+        })
+
+
+
+
+        // for featured products
+
         //callback example
         // function fetchDataCallback(url, callback) {
         //     const xhr = new XMLHttpRequest();
@@ -219,29 +277,29 @@
 
 
         //promise example
-        function fetchDataPromise(url) {
-            return new Promise((resolve, reject) => {
-                const xhr = new XMLHttpRequest();
-                xhr.open("GET", url, true);
-                xhr.onload = function () {
+        // function fetchDataPromise(url) {
+        //     return new Promise((resolve, reject) => {
+        //         const xhr = new XMLHttpRequest();
+        //         xhr.open("GET", url, true);
+        //         xhr.onload = function () {
 
-                    if (xhr.status >= 200 && xhr.status < 300) {
-                        resolve(JSON.parse(xhr.responseText));
-                    }
-                    else {
-                        reject(xhr.statusText);
+        //             if (xhr.status >= 200 && xhr.status < 300) {
+        //                 resolve(JSON.parse(xhr.responseText));
+        //             }
+        //             else {
+        //                 reject(xhr.statusText);
 
-                    }
-                }
+        //             }
+        //         }
 
-                xhr.onerror = function () {
-                    reject(xhr.statusText);
+        //         xhr.onerror = function () {
+        //             reject(xhr.statusText);
 
-                }
-                xhr.send();
-            })
+        //         }
+        //         xhr.send();
+        //     })
 
-        }
+        // }
 
         //calling fetchDataPromise
         // fetchDataPromise("https://fakestoreapi.com/products")
